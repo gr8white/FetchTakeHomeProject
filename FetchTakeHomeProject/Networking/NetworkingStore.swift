@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class NetworkingStore {
+    static let shared = NetworkingStore()
+    
     func fetchData<T: Decodable>(from url: URL) async throws -> T {
         let data = try await cacheRequest(url)
         
@@ -29,6 +31,11 @@ class NetworkingStore {
         return image
     }
     
+    func isCached(url: URL) -> Bool {
+        let request = URLRequest(url: url)
+        return URLCache.shared.cachedResponse(for: request) != nil
+    }
+    
     private func cacheRequest(_ url: URL) async throws -> Data {
         let cache = URLCache.shared
         
@@ -47,7 +54,6 @@ class NetworkingStore {
         
         let cachedResponse = CachedURLResponse(response: response, data: data)
         cache.storeCachedResponse(cachedResponse, for: request)
-        print("Data stored in cache")
         
         return data
     }
@@ -58,4 +64,17 @@ enum NetworkingError: Error {
     case invalidResponse
     case invalidImageData
     case invalidResponseCode(Int)
+    
+    var localizedDescription: String {
+        switch self {
+        case .decodingFailed(let error):
+            return "Decoding failed: \(error.localizedDescription)"
+        case .invalidResponse:
+            return "There was an error parsing the response. \nPlease change tabs."
+        case .invalidImageData:
+            return "Invalid image data"
+        case .invalidResponseCode(let code):
+            return "Invalid response code: \(code)"
+        }
+    }
 }

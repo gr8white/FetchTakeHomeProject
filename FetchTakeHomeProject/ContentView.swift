@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var selectedScenario: URLScenario = .empty
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selectedScenario) {
+            Tab("Malformed", systemImage: "square.slash", value: .malformed) {
+                scenarioTab(.malformed)
+            }
+            
+            Tab("Recipes", systemImage: "square", value: .success) {
+                scenarioTab(.success)
+            }
+            
+            Tab("Empty", systemImage: "square.dashed", value: .empty) {
+                scenarioTab(.empty)
+            }
         }
-        .padding()
+    }
+    
+    func scenarioTab(_ scenario:URLScenario) -> some View {
+        NavigationStack {
+            RecipeListScreen(requestURL: scenario.url)
+                .navigationTitle(scenario.title)
+        }
     }
 }
 
