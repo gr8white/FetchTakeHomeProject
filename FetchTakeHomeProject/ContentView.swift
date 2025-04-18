@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedScenario: URLScenario = .empty
+    @State private var selectedScenario: URLScenario = .success
     
     var body: some View {
         TabView(selection: $selectedScenario) {

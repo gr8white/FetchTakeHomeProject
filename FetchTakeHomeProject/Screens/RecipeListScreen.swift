@@ -13,8 +13,12 @@ struct RecipeListScreen: View {
     let requestURL: URL
     
     @State private var recipes: [Recipe] = []
+    @State private var displayedRecipes: [Recipe] = []
     @State private var contentState: ContentState = .loading
     @State private var hasFetched: Bool = false
+    @State private var showFilterSheet: Bool = false
+    @State private var selectedCuisine: String?
+    @State private var cuisineCounts: [String: Int] = [:]
     
     private func fetchData() async {
         do {
@@ -22,10 +26,32 @@ struct RecipeListScreen: View {
             let responseData: RecipeResponse = try await networkStore.fetchData(from: requestURL)
             
             recipes = responseData.recipes.shuffled()
+            displayedRecipes = recipes
+            cuisineCounts = getCuisineCounts()
             contentState = .success
         } catch {
             contentState = .failure(.invalidResponse)
         }
+    }
+    
+    func filterRecipes() {
+        guard let selectedCuisine, selectedCuisine != "All" else {
+            displayedRecipes = recipes.shuffled()
+            selectedCuisine = nil
+            return
+        }
+        
+        displayedRecipes = recipes.filter({ $0.cuisine == selectedCuisine })
+    }
+    
+    func getCuisineCounts() -> [String: Int] {
+        var counts: [String: Int] = [:]
+        
+        for recipe in recipes {
+            counts[recipe.cuisine, default: 0] += 1
+        }
+        
+        return counts
     }
     
     var body: some View {
@@ -38,7 +64,7 @@ struct RecipeListScreen: View {
                     errorMessage(emoji: "🫥", description: "We couldn't find any recipes. \nPlease change tabs.")
                 } else {
                     ScrollView {
-                        ForEach(recipes) { recipe in
+                        ForEach(displayedRecipes) { recipe in
                             NavigationLink {
                                 RecipeDetailView(recipe: recipe)
                             } label: {
@@ -59,12 +85,59 @@ struct RecipeListScreen: View {
                 await fetchData()
             }
         }
+        .sheet(isPresented: $showFilterSheet) {
+            filterSheet
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showFilterSheet = true
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease")
+                }
+                .disabled(recipes.isEmpty)
+            }
+        }
     }
     
     enum ContentState {
         case loading
         case success
         case failure(NetworkingError)
+    }
+    
+    private var filterSheet: some View {
+        NavigationStack {
+            VStack {
+                Picker("Filter by Cuisine Type", selection: $selectedCuisine) {
+                    Text("All").tag("All")
+                    ForEach(Array(cuisineCounts.keys), id: \.self) { cuisine in
+                        if let count = cuisineCounts[cuisine] {
+                            Text("\(cuisine) (\(count))").tag(cuisine)
+                        }
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+                .frame(height: 150)
+                
+                Button("Apply Filter") {
+                    showFilterSheet = false
+                    filterRecipes()
+                }
+            }
+            .presentationDetents([.height(250)])
+            .navigationTitle("Filter by Cuisine Type")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    showFilterSheet = false
+                } label: {
+                    Text("Cancel")
+                }
+            }
+        }
     }
     
     private func errorMessage(emoji: String, description: String) -> some View {
@@ -108,7 +181,7 @@ struct RecipeCellView: View {
 }
 
 #Preview {
-    NavigationStack{
+    NavigationStack {
         RecipeListScreen(requestURL: URLScenario.success.url)
     }
 }
