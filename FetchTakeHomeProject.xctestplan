@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "539475A2-ED22-48C1-923A-AE19E5702B3F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:FetchTakeHomeProject.xcodeproj",
+        "identifier" : "1B45AD082DB1EEB1006C21B8",
+        "name" : "FetchTakeHomeProjectTests"
+      }
+    }
+  ],
+  "version" : 1
+}

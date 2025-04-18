@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1B559B9F2DB235A2004BCB13 /* FetchTakeHomeProject.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 1B559B9E2DB235A2004BCB13 /* FetchTakeHomeProject.xctestplan */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1B45AD0A2DB1EEB1006C21B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		1B45ACF92DB1EEAF006C21B8 /* FetchTakeHomeProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchTakeHomeProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B45AD092DB1EEB1006C21B8 /* FetchTakeHomeProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchTakeHomeProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B45AD132DB1EEB1006C21B8 /* FetchTakeHomeProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchTakeHomeProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B559B9E2DB235A2004BCB13 /* FetchTakeHomeProject.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FetchTakeHomeProject.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		1B45ACF02DB1EEAF006C21B8 = {
 			isa = PBXGroup;
 			children = (
+				1B559B9E2DB235A2004BCB13 /* FetchTakeHomeProject.xctestplan */,
 				1B45ACFB2DB1EEAF006C21B8 /* FetchTakeHomeProject */,
 				1B45AD0C2DB1EEB1006C21B8 /* FetchTakeHomeProjectTests */,
 				1B45AD162DB1EEB1006C21B8 /* FetchTakeHomeProjectUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B559B9F2DB235A2004BCB13 /* FetchTakeHomeProject.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

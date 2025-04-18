@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>FetchTakeHomeProjectTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1B45ACF82DB1EEAF006C21B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B45AD082DB1EEB1006C21B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B45AD122DB1EEB1006C21B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>
